@@ -5,7 +5,7 @@ import type {
 } from "../types/index";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL: import.meta.env.VITE_API_URL || "/api/",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -29,31 +29,31 @@ api.interceptors.response.use(
 // Auth
 export const authApi = {
   register: (data: { name: string; email: string; password: string }) =>
-    api.post<{ token: string; user: { id: string; name: string; email: string } }>("/auth/register", data),
+    api.post<{ token: string; user: { id: string; name: string; email: string } }>("auth/register", data),
   login: (data: { email: string; password: string }) =>
-    api.post<{ token: string; user: { id: string; name: string; email: string } }>("/auth/login", data),
+    api.post<{ token: string; user: { id: string; name: string; email: string } }>("auth/login", data),
   getMe: () =>
-    api.get<{ user: { id: string; name: string; email: string } }>("/auth/me"),
+    api.get<{ user: { id: string; name: string; email: string } }>("auth/me"),
 };
 
 // Applications
 export const applicationsApi = {
-  getAll: () => api.get<{ applications: Application[] }>("/applications"),
+  getAll: () => api.get<{ applications: Application[] }>("applications"),
   create: (data: Partial<Application>) =>
-    api.post<{ application: Application }>("/applications", data),
+    api.post<{ application: Application }>("applications", data),
   update: (id: string, data: Partial<Application>) =>
-    api.put<{ application: Application }>(`/applications/${id}`, data),
-  delete: (id: string) => api.delete(`/applications/${id}`),
+    api.put<{ application: Application }>(`applications/${id}`, data),
+  delete: (id: string) => api.delete(`applications/${id}`),
   updateOrder: (updates: Array<{ id: string; status: string; order: number }>) =>
-    api.put("/applications/order", { updates }),
+    api.put("applications/order", { updates }),
 };
 
 // AI
 export const aiApi = {
   parseJD: (jobDescription: string) =>
-    api.post<{ parsed: ParsedJobData }>("/ai/parse", { jobDescription }),
+    api.post<{ parsed: ParsedJobData }>("ai/parse", { jobDescription }),
   getSuggestions: (jobDescription: string, parsedData: ParsedJobData) =>
-    api.post<{ suggestions: { bullets: string[] } }>("/ai/suggestions", {
+    api.post<{ suggestions: { bullets: string[] } }>("ai/suggestions", {
       jobDescription,
       parsedData,
     }),
