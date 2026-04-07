@@ -31,7 +31,7 @@ An AI-powered job application tracker with a Kanban board interface. Paste any j
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Shubham68201/Job-tracker.git
 cd job-tracker
 
 # Install server dependencies
